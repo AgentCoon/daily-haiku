@@ -1,0 +1,34 @@
+logging:
+  level: INFO
+  loggers:
+    "com.researchresearch": DEBUG
+
+startEmbeddedDB: true
+
+allowCORS: true
+
+server:
+  applicationConnectors:
+  - type: h2c
+    port: 8380
+    maxRequestHeaderSize: 100KiB
+  adminConnectors:
+  - type: http
+    port: 8381
+
+database:
+  user: user
+  password: password
+  url: jdbc:postgresql://localhost:5433/test
+  driverClass: org.postgresql.Driver
+  properties:
+    charSet: UTF-8
+  maxWaitForConnection: 10s
+  validationQuery: "/* Daily Haiku Health Check */ SELECT 1"
+  validationQueryTimeout: 8s
+  initialSize: 2
+  minSize: 2
+  maxSize: 4
+  checkConnectionWhileIdle: false
+  evictionInterval: 10s
+  minIdleTime: 1 minute

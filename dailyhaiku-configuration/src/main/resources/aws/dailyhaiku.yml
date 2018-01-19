@@ -1,0 +1,48 @@
+#jinja2: trim_blocks: False
+#
+# Daily Haiku Properties
+#
+# Populated by deployment scripts dependent on the target environment
+#
+
+logging:
+  level: INFO
+  appenders:
+    - type: file
+      currentLogFilename: {{logging.applicationCurrent}}
+      archivedLogFilenamePattern: {{logging.applicationArchive}}
+      archivedFileCount: 10
+      logFormat: "[%thread] %-5level [%date{'yyyy-MM-dd HH:mm:ss,SSS'}] %c: %m%n%rEx"
+
+allowCORS: true
+
+server:
+  applicationConnectors:
+  - type: h2c
+    maxRequestHeaderSize: 100KiB
+  requestLog:
+    appenders:
+      - type: file
+        currentLogFilename: {{ logging.accessCurrent }}
+        archivedLogFilenamePattern: {{ logging.accessArchive }}
+        archivedFileCount: 10
+
+startEmbeddedDB: false
+
+database:
+  user: {{ database.username }}
+  password: {{ database.password }}
+  url: jdbc:postgresql://{{database.host}}:{{database.port}}/{{database.name}}
+  driverClass: org.postgresql.Driver
+  properties:
+    charSet: UTF-8
+  maxWaitForConnection: 10s
+  validationQuery: "/* Daily Haiku Health Check */ SELECT 1"
+  validationQueryTimeout: 8s
+  initialSize: 2
+  minSize: 2
+  maxSize: 4
+  checkConnectionWhileIdle: true
+  checkConnectionOnBorrow: true
+  evictionInterval: 10s
+  minIdleTime: 1 minute

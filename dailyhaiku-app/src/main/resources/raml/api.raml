@@ -1,0 +1,54 @@
+#%RAML 1.0
+title: Daily haiku API
+version: v1
+documentation:
+  - title: Getting Started
+    content: |
+      # Provides
+      * Haikus
+baseUri: http://localhost:8080/{version}
+
+types:
+  haiku:
+    type: object
+    properties:
+      id:
+        required: false
+        type: number
+      author:
+        type: string
+      body:
+        type: string
+
+/haiku:
+  post:
+    description: Add a new haiku
+    body:
+      application/json:
+        type: haiku
+    responses:
+      201:
+
+  get:
+    description: Get a random haiku
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "author": "Matsuo Basho",
+                "body": "Autumn moonlight— a worm digs silently into the chestnut."
+              }
+
+  /{id}:
+    get:
+      description: Get haiku by id
+      responses:
+        200:
+          body:
+            application/json:
+              type: haiku
+        404:
+          body:
+            plain/text:

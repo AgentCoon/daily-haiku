@@ -1,0 +1,8 @@
+.settings/
+/.externalToolBuilders/
+target/
+.project
+.idea
+.classpath
+dependency-reduced-pom.xml
+*.iml
