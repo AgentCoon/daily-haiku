@@ -1,7 +1,7 @@
 logging:
   level: INFO
   loggers:
-    "com.researchresearch": DEBUG
+    "com.agentcoon": DEBUG
 
 startEmbeddedDB: true
 

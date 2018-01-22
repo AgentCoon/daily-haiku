@@ -46,7 +46,9 @@ CREATE DATABASE TODO WITH encoding 'UTF8';
 Application runs as a standard Java program with a main method. Jetty is embedded so there's no need to run as a WAR.
 
 module: dailyhaiku-app
+
 main class: com.agentcoon.dailyhaiku.app.dropwizard.HaikuApplication
+
 parameters: server ${workspace_loc:/dailyhaiku-configuration}/src/main/resources/local/dailyhaiku.yml
 
 ## Build

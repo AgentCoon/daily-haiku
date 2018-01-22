@@ -10,6 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>dailyhaiku-api</artifactId>
+    <name>dailyhaiku-api</name>
 
     <dependencies>
         <dependency>
@@ -24,6 +25,5 @@
             <version>${rs-api.version}</version>
         </dependency>
     </dependencies>
-
 
 </project>
