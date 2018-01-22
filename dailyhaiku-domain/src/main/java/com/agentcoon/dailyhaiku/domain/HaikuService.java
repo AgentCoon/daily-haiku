@@ -22,4 +22,12 @@ public class HaikuService {
     public Long save(Haiku haiku) {
         return haikuRepository.save(haiku);
     }
+
+    public void update(Haiku haiku) {
+        haikuRepository.update(haiku);
+    }
+
+    public void delete(Long id) {
+        haikuRepository.deleteById(id);
+    }
 }

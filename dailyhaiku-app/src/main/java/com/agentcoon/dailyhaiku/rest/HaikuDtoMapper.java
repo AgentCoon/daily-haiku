@@ -17,6 +17,13 @@ public class HaikuDtoMapper {
                 .build();
     }
 
+    public Haiku from(Long id, HaikuDto dto) {
+        return aHaiku().withId(id)
+                .withAuthor(dto.getAuthor())
+                .withBody(dto.getBody())
+                .build();
+    }
+
     public HaikuDto from(Haiku haiku) {
         return aHaikuDto()
                 .withId(haiku.getId())

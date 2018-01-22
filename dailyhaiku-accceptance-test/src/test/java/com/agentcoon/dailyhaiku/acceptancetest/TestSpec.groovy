@@ -12,6 +12,22 @@ class TestSpec extends Specification {
     @Shared
     DailyHaikuDriver dailyHaiku = new DailyHaikuDriver()
 
+    def "Create haiku"() {
+
+        String haikuAuthor = "Jack Kerouac"
+        String haikuBody = "Nightfall,\n" +
+                "Too dark to read the page\n" +
+                "Too cold."
+
+        logger.info("TestSpec: Haiku can be created")
+
+        when: "A new haiku is created"
+        Long id = dailyHaiku.createHaikuWithId(haikuAuthor, haikuBody)
+
+        then: "A haiku exists with id"
+        dailyHaiku.haikuWithIdExists(id)
+    }
+
     def "Fetch a random haiku"() {
 
         String haikuAuthor = "Jack Kerouac"

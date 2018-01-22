@@ -53,23 +53,66 @@ public class HaikuResourceTest {
     @Test
     public void saveHaikuTest() {
         Long haikuId = 1L;
+
         Haiku haiku = aHaiku().withId(haikuId).build();
         HaikuDto haikuDto = aHaikuDto().build();
 
         when(haikuService.save(haiku)).thenReturn(haikuId);
         when(mapper.from(haikuDto)).thenReturn(haiku);
 
-        Response response = haikuResource.save(haikuDto, uriInfo);
+        Response response = haikuResource.create(haikuDto, uriInfo);
 
         assertEquals(201, response.getStatus());
         verify(haikuService, times(1)).save(haiku);
     }
 
     @Test
-    public void findByIdTest() {
+    public void updateHaikuTest() {
+        Long haikuId = 1L;
+        String author = "Haiku author";
 
+        Haiku haiku = aHaiku().withId(haikuId).build();
+        Haiku updatedHaiku = aHaiku().withId(haikuId).withAuthor(author).build();
+        HaikuDto haikuDto = aHaikuDto().build();
+
+        when(haikuService.findById(haikuId)).thenReturn(haiku);
+        when(mapper.from(haikuId, haikuDto)).thenReturn(updatedHaiku);
+
+        Response response = haikuResource.update(haikuId, haikuDto);
+
+        assertEquals(200, response.getStatus());
+        verify(haikuService, times(1)).update(updatedHaiku);
+    }
+
+    @Test
+    public void updateHaikuWhenNotFoundTest() {
+        Long haikuId = 1L;
+
+        HaikuDto haikuDto = aHaikuDto().build();
+
+        when(haikuService.findById(haikuId)).thenReturn(null);
+
+        Response response = haikuResource.update(haikuId, haikuDto);
+
+        assertEquals(404, response.getStatus());
+        verify(haikuService, never()).update(any(Haiku.class));
+    }
+
+    @Test
+    public void deleteHaikuTest() {
+        Long haikuId = 1L;
+
+        Response response = haikuResource.delete(haikuId);
+
+        assertEquals(200, response.getStatus());
+        verify(haikuService, times(1)).delete(haikuId);
+    }
+
+    @Test
+    public void findByIdTest() {
         Long id = 123L;
         String author = "Haiku author";
+
         Haiku haiku = aHaiku().withId(id).withAuthor(author).build();
         HaikuDto dto = aHaikuDto().withAuthor(author).build();
 
@@ -86,7 +129,6 @@ public class HaikuResourceTest {
 
     @Test
     public void findByIdWhenNotFoundTest() {
-
         Long id = 123L;
 
         when(haikuService.findById(id)).thenReturn(null);

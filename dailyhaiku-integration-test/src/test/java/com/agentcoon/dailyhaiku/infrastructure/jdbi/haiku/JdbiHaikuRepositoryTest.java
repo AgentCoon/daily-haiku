@@ -12,9 +12,7 @@ import java.util.List;
 import static com.agentcoon.dailyhaiku.domain.Haiku.HaikuBuilder.aHaiku;
 import static java.util.stream.Collectors.toList;
 import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 public class JdbiHaikuRepositoryTest {
 
@@ -45,6 +43,64 @@ public class JdbiHaikuRepositoryTest {
         assertEquals(savedHaikuId, retrievedHaiku.getId());
         assertEquals(author, retrievedHaiku.getAuthor());
         assertEquals(body, retrievedHaiku.getBody());
+    }
+
+    @Test
+    public void updateHaikuTest() {
+        String author = "Haiku author";
+        String body = "Haiku body";
+
+        String updatedAuthor = "Updated haiku author";
+
+        Haiku haiku = aHaiku().withAuthor(author)
+                .withBody(body).build();
+
+        Long savedHaikuId = haikuRepository.save(haiku);
+
+        assertNotNull(savedHaikuId);
+
+        Haiku retrievedHaiku = haikuRepository.findById(savedHaikuId);
+
+        assertEquals(savedHaikuId, retrievedHaiku.getId());
+        assertEquals(author, retrievedHaiku.getAuthor());
+        assertEquals(body, retrievedHaiku.getBody());
+
+        Haiku updatedHaiku = aHaiku().withId(savedHaikuId)
+                .withAuthor(updatedAuthor)
+                .withBody(body).build();
+
+        haikuRepository.update(updatedHaiku);
+
+        Haiku retrievedUpdatedHaiku = haikuRepository.findById(savedHaikuId);
+
+        assertEquals(savedHaikuId, retrievedUpdatedHaiku.getId());
+        assertEquals(updatedAuthor, retrievedUpdatedHaiku.getAuthor());
+        assertEquals(body, retrievedUpdatedHaiku.getBody());
+    }
+
+    @Test
+    public void deleteHaikuTest() {
+        String author = "Haiku author";
+        String body = "Haiku body";
+
+        Haiku haiku = aHaiku().withAuthor(author)
+                .withBody(body).build();
+
+        Long savedHaikuId = haikuRepository.save(haiku);
+
+        assertNotNull(savedHaikuId);
+
+        Haiku retrievedHaiku = haikuRepository.findById(savedHaikuId);
+
+        assertEquals(savedHaikuId, retrievedHaiku.getId());
+        assertEquals(author, retrievedHaiku.getAuthor());
+        assertEquals(body, retrievedHaiku.getBody());
+
+        haikuRepository.deleteById(savedHaikuId);
+
+        retrievedHaiku = haikuRepository.findById(savedHaikuId);
+
+        assertNull(retrievedHaiku);
     }
 
     @Test

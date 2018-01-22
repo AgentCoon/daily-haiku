@@ -31,6 +31,24 @@ public class HaikuDtoMapperTest {
     }
 
     @Test
+    public void fromDtoWithId() {
+
+        Long id = 1L;
+        String author = "Author";
+        String body = "Body";
+
+        HaikuDto dto = aHaikuDto()
+                .withAuthor(author)
+                .withBody(body).build();
+
+        Haiku haiku = mapper.from(id, dto);
+
+        assertEquals(id, haiku.getId());
+        assertEquals(author, haiku.getAuthor());
+        assertEquals(body, haiku.getBody());
+    }
+
+    @Test
     public void fromHaiku() {
 
         Long id = 1L;

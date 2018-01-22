@@ -5,8 +5,7 @@ import org.junit.Test;
 
 import static com.agentcoon.dailyhaiku.domain.Haiku.HaikuBuilder.aHaiku;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class HaikuServiceTest {
 
@@ -23,8 +22,8 @@ public class HaikuServiceTest {
 
     @Test
     public void saveTest() {
-
         Long id = 1L;
+
         Haiku haiku = aHaiku().build();
 
         when(haikuRepository.save(haiku)).thenReturn(id);
@@ -34,9 +33,25 @@ public class HaikuServiceTest {
     }
 
     @Test
-    public void findByIdTest() {
+    public void updateTest() {
+        Haiku haiku = aHaiku().build();
 
+        haikuService.update(haiku);
+        verify(haikuRepository, times(1)).update(any(Haiku.class));
+    }
+
+    @Test
+    public void deleteTest() {
         Long id = 1L;
+
+        haikuService.delete(id);
+        verify(haikuRepository, times(1)).deleteById(any(Long.class));
+    }
+
+    @Test
+    public void findByIdTest() {
+        Long id = 1L;
+
         Haiku haiku = aHaiku().withId(id).build();
 
         when(haikuRepository.findById(id)).thenReturn(haiku);
