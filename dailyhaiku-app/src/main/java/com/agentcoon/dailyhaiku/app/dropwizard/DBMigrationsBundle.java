@@ -12,7 +12,7 @@ import org.flywaydb.core.Flyway;
 public class DBMigrationsBundle implements ConfiguredBundle<DailyHaikuConfiguration> {
 
     @Override
-    public void run(DailyHaikuConfiguration configuration, Environment environment) throws Exception {
+    public void run(DailyHaikuConfiguration configuration, Environment environment) {
         Flyway flyway = new Flyway();
 
         flyway.setDataSource(configuration.getDatabase().getUrl(), configuration.getDatabase().getUser(),

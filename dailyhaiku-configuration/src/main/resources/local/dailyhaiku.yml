@@ -1,8 +1,9 @@
-
 logging:
   level: INFO
   loggers:
     "com.agentcoon": DEBUG
+
+startEmbeddedDB: true
 
 allowCORS: true
 
@@ -10,8 +11,6 @@ server:
   applicationConnectors:
   - type: h2c
     maxRequestHeaderSize: 100KiB
-
-startEmbeddedDB: true
 
 database:
   user: user
